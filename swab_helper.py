@@ -11,7 +11,7 @@ class SWABHelper:
         self.client = client
         self.songs = asyncio.Queue()
         self.play_next_song = asyncio.Event()
-        self.client.loop.create_task(self.audio_player_task())
+        client.loop.create_task(self.audio_player_task())
 
     async def put_songs(self, player):
         await self.songs.put(player)
@@ -49,7 +49,7 @@ class SWABHelper:
         if os.path.exists(file_path):
             await SWABHelper(self.client).play_audio(file_path, vc)
         else:
-            audio = best.download(filepath=file_path, callback=PafyCallback(file_path, vc))
+            audio = best.download(filepath=file_path, callback=PafyCallback(file_path, vc, self))
 
     async def play_audio(self, file_path, vc):
         options = {
@@ -57,7 +57,7 @@ class SWABHelper:
         }
         audio = discord.FFmpegOpusAudio(file_path)
         # await discord.FFmpegOpusAudio.from_probe(file_path, options=options)
-        self.songs.put(audio)
+        self.songs.put([vc, audio])
         # vc.play(source, after=self.toggle_next)
 
     def is_me_or_command(self, message):
@@ -67,7 +67,8 @@ class SWABHelper:
         while True:
             self.play_next_song.clear()
             current = await self.songs.get()
-            current.play()
+            current[0].play(current[1])
+            # current.play()
             await self.play_next_song.wait()
 
     def toggle_next(self):
