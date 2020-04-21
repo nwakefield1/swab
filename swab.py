@@ -5,6 +5,7 @@ import json
 import tempfile
 import os
 
+from dotenv import load_dotenv
 from youtube_search import YoutubeSearch
 
 interesting_ids = {
@@ -129,5 +130,5 @@ async def on_voice_state_update(member, before, after):
             url = 'https://www.youtube.com/watch?v=trj0Jy6Kfo8'
             await s.get_audio_url(url, vc)
 
-# you should probably remove this
-client.run('NzAxOTEwMjAxNDcyNzc4Mzgw.Xp4YGw.O8xtjToypf5vxakYPg1hmAQQHPo')
+load_dotenv()
+client.run(os.getenv("SWAB_TOKEN"))
