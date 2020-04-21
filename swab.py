@@ -1,8 +1,8 @@
 import discord
-import re
-import json
-import tempfile
 import os
+import time
+import random
+import json
 
 from dotenv import load_dotenv
 from youtube_search import YoutubeSearch
@@ -33,10 +33,18 @@ s = SWABHelper(client=client)
 async def on_message(message):
     if message.content.startswith('~werk'):
         users = client.users
+        commands = message.content.split('~werk')
+        if len(commands) > 1:
+            times = int(commands[1].strip())
+        else:
+            times = 1
+
         for user in users:
             if str(user.id) == interesting_ids['swan']:
                 swan = user
-                await message.channel.send(swan.mention + ' go back to work')
+                for i in range(0, times):                
+                    await message.channel.send(swan.mention + ' go back to work')
+                    time.sleep(random.randint(0, 60))
 
     if message.content.startswith('~clean'):
         deleted = await message.channel.purge(limit=100, check=s.is_me_or_command)
