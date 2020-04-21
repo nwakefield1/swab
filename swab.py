@@ -1,5 +1,4 @@
 import discord
-import pafy
 import re
 import json
 import tempfile
@@ -7,6 +6,8 @@ import os
 
 from dotenv import load_dotenv
 from youtube_search import YoutubeSearch
+
+from swab_helper import SWABHelper
 
 interesting_ids = {
     'nathan': '234020073281421312',
@@ -25,77 +26,15 @@ command_list = [
     '~poophead'
 ]
 
-
-class SWABHelper:
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def is_me(message):
-        return message.author == client.user
-
-    @staticmethod
-    def is_command(message):
-        return message.content.startswith('~')
-
-    @staticmethod
-    def validate_url(url):
-        regex = re.compile(
-            r'^(?:http|ftp)s?://'  # http:// or https://
-            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
-            r'localhost|'  # localhost...
-            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
-            r'(?::\d+)?'  # optional port
-            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-        return re.match(regex, url)
-
-    @staticmethod
-    async def get_voice_client(channel, _client):
-        try:
-            vc = await channel.connect()
-        except discord.errors.ClientException:
-            vc = _client.voice_clients[0]
-        return vc
-
-    async def get_audio_url(self, url, vc):
-        video = pafy.new(url)
-        best = video.getbestaudio()   
-        file_path = 'music/{}.{}'.format(video.videoid, best.extension)
-        if os.path.exists(file_path):
-            await SWABHelper().play_audio(file_path, vc)
-        else:
-            audio = best.download(filepath=file_path, callback=PafyCallback(file_path, vc))
-
-    async def play_audio(self, file_path, vc):
-        options = {
-            'probesize': '24M'
-        }
-        source = await discord.FFmpegOpusAudio.from_probe(file_path, options=options)
-        vc.play(source)
-
-    def is_me_or_command(self, message):
-        return self.is_me(message) or self.is_command(message)
-
-class PafyCallback():
-    def __init__(self, file_path, vc):
-        self.vc = vc
-        self.file_path = file_path
-
-    def __call__(self, total, recvd, ratio, rate, eta):
-        if ratio == 1.0:        
-            audio = discord.FFmpegOpusAudio(self.file_path)
-            self.vc.play(audio)
-
-s = SWABHelper()
 client = discord.Client()
-
+s = SWABHelper(client=client)
 
 @client.event
 async def on_message(message):
     if message.content.startswith('~werk'):
         users = client.users
         for user in users:
-            if str(user.id) == '193631636032585728':
+            if str(user.id) == interesting_ids['swan']:
                 swan = user
                 await message.channel.send(swan.mention + ' go back to work')
 
@@ -124,7 +63,7 @@ async def on_message(message):
 
 @client.event
 async def on_voice_state_update(member, before, after):
-    if str(member.id) == '257014900486832128':
+    if str(member.id) == interesting_ids['ryan']:
         if before.channel is None and after.channel is not None:
             vc = await s.get_voice_client(after.channel, client)
             url = 'https://www.youtube.com/watch?v=trj0Jy6Kfo8'
