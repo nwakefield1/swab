@@ -9,6 +9,11 @@ from youtube_search import YoutubeSearch
 
 from swab_helper import SWABHelper
 
+load_dotenv()
+client = discord.Client()
+s = SWABHelper(client=client)
+
+
 interesting_ids = {
     'nathan': '234020073281421312',
     'loc': '253709501830529026',
@@ -26,8 +31,6 @@ command_list = [
     '~poophead'
 ]
 
-client = discord.Client()
-s = SWABHelper(client=client)
 
 @client.event
 async def on_message(message):
@@ -77,5 +80,4 @@ async def on_voice_state_update(member, before, after):
             url = 'https://www.youtube.com/watch?v=trj0Jy6Kfo8'
             await s.get_audio_url(url, vc)
 
-load_dotenv()
 client.run(os.getenv("SWAB_TOKEN"))
