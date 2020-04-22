@@ -4,9 +4,11 @@ import time
 import random
 import json
 
+from discord.ext import commands
 from dotenv import load_dotenv
 from youtube_search import YoutubeSearch
 
+from music import Music
 from swab_helper import SWABHelper
 
 interesting_ids = {
@@ -26,8 +28,11 @@ command_list = [
     '~poophead'
 ]
 
+
 client = discord.Client()
+bot = commands.Bot(command_prefix='~')
 s = SWABHelper(client=client)
+music = Music(client=client, swab_helper=s)
 
 @client.event
 async def on_message(message):
@@ -59,14 +64,19 @@ async def on_message(message):
 
     if message.content.startswith('~play'):
         channel = message.author.voice.channel
-        url = message.content.split('~play')[1]
-        if not s.validate_url(url):
-            results = json.loads(YoutubeSearch(url, max_results=1).to_json())['videos'][0]['link']
-            url = 'https://www.youtube.com/{}'.format(results)
-        else:
-            url = url.strip()
-        vc = await s.get_voice_client(channel, client)
-        await s.get_audio_url(url, vc)
+        voice_client = await s.get_voice_client(channel, client)
+
+        if channel != voice_client.channel:
+            await voice_client.disconnect()
+            voice_client = await s.get_voice_client(channel, client)
+
+        path = music.get_file_path_from_url(message, voice_client)
+        if path is not None:
+            # if path is None, a video is being downloaded and PafyCallback will handle this
+            music.add_to_queue(path)        
+        if not voice_client.is_playing():
+            # if not playing, play the song in the queue
+            music.play_song(voice_client)
 
 
 @client.event

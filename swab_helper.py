@@ -8,6 +8,7 @@ from callbacks import PafyCallback
 class SWABHelper:
     def __init__(self, client):
         self.client = client
+        self.playlist = []
 
     def is_me(self, message):
         return message.author == self.client.user
@@ -40,7 +41,7 @@ class SWABHelper:
         best = video.getbestaudio()   
         file_path = 'music/{}.{}'.format(video.videoid, best.extension)
         if os.path.exists(file_path):
-            await SWABHelper().play_audio(file_path, vc)
+            await SWABHelper(self.client).play_audio(file_path, vc)
         else:
             audio = best.download(filepath=file_path, callback=PafyCallback(file_path, vc))
 
