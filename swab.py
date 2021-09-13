@@ -28,6 +28,12 @@ async def on_message(message):
     if message.content.startswith('~skip'):
         await skip(message)
 
+    if message.content.startswwith('~pause'):
+        await pause(message)
+
+    if message.content.startswith('~resume') or message.content.startswith('~continue'):
+        await resume(message)
+
 # @client.event
 # async def on_voice_state_update(member, before, after):
 #     if str(member.id) == interesting_ids['ryan']:
