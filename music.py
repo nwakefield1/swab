@@ -29,14 +29,18 @@ class Music:
         except IndexError:
             pass
 
-    def add_to_queue(self, file_path):
+    def add_to_queue(self, file_path, to_front=False):
         """
         adds a song to the playlist queue
         """
-        self.playlist.append(file_path)
+        if to_front:
+            self.playlist.insert(0, file_path)
+        else:
+            self.playlist.append(file_path)
 
-    async def get_file_path_from_url(self, message, voice_client):
-        url = message.content.split('~play')[1]
+    async def get_file_path_from_url(self, message, voice_client, url=None):
+        if not url:
+            url = message.content.split('~play')[1]
         if not self.swab_helper.validate_url(url):
             response = json.loads(YoutubeSearch(url, max_results=1).to_json())['videos'][0]
             title = response['title']
