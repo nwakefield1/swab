@@ -1,7 +1,7 @@
-discord.py
-pafy
+discord.py==1.7.3
+pafy==0.5.5
 yarl==1.4.2
-youtube-dl
-youtube_search
+youtube-dl==2021.6.6
+youtube_search==2.1.0
 pynacl==1.3.0
 python-dotenv==0.13.0

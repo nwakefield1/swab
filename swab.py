@@ -2,7 +2,13 @@ import os
 from dotenv import load_dotenv
 
 from settings import client
-from bot_functions import clean, make_swan_go_back_to_work, play, poophead
+from bot_functions import (
+    clean,
+    make_swan_go_back_to_work,
+    play,
+    poophead,
+    skip
+)
 
 
 @client.event
@@ -18,6 +24,9 @@ async def on_message(message):
 
     if message.content.startswith('~play'):
         await play(message)
+
+    if message.content.startswith('~skip'):
+        await skip(message)
 
 # @client.event
 # async def on_voice_state_update(member, before, after):

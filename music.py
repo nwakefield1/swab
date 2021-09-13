@@ -12,13 +12,15 @@ from callbacks import PafyCallback
 class Music:
     def __init__(self, client, swab_helper):
         self.client = client
-        self.playlist = []
         self.swab_helper = swab_helper
+        self.playlist = []
+        self.current_song_playing = None
 
     def play_song(self, voice_client):
         source = discord.FFmpegOpusAudio(self.playlist[0], options={'use_wallclock_as_timestamps': True})
         voice_client.play(source, after=self.play_after)
         self.playlist.pop(0)
+        self.current_song_playing = source
 
     def play_after(self, error):
         try:
