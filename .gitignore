@@ -130,3 +130,5 @@ dmypy.json
 
 # music folder, don't upload em
 music/
+
+.idea/
