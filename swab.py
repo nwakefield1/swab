@@ -7,7 +7,9 @@ from bot_functions import (
     make_swan_go_back_to_work,
     play,
     poophead,
-    skip
+    skip,
+    pause,
+    resume
 )
 
 
@@ -28,7 +30,7 @@ async def on_message(message):
     if message.content.startswith('~skip'):
         await skip(message)
 
-    if message.content.startswwith('~pause'):
+    if message.content.startswith('~pause'):
         await pause(message)
 
     if message.content.startswith('~resume') or message.content.startswith('~continue'):
