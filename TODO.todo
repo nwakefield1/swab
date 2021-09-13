@@ -1,6 +1,6 @@
 Ordered from highest to lowest priority
 
-[] Skip song
+[x] Skip song
 [] Pause song
 [] Prevent user from playing songs over 1hr in length. (I'm not paying for the extra storage space when I have to host this...)
 [] Upload songs to S3 and download from there instead of downloading locally
@@ -12,5 +12,7 @@ Ordered from highest to lowest priority
 [] Turn off loop queue
 
 Nice to have:
+Play skull trumpet whenever a song is skipped
+
 set up a small db for this and track stats on songs
 if necessary, prune cached songs based on stats stored from above

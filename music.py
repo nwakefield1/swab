@@ -12,13 +12,15 @@ from callbacks import PafyCallback
 class Music:
     def __init__(self, client, swab_helper):
         self.client = client
-        self.playlist = []
         self.swab_helper = swab_helper
+        self.playlist = []
+        self.current_song_playing = None
 
     def play_song(self, voice_client):
         source = discord.FFmpegOpusAudio(self.playlist[0], options={'use_wallclock_as_timestamps': True})
         voice_client.play(source, after=self.play_after)
         self.playlist.pop(0)
+        self.current_song_playing = source
 
     def play_after(self, error):
         try:
@@ -27,14 +29,18 @@ class Music:
         except IndexError:
             pass
 
-    def add_to_queue(self, file_path):
+    def add_to_queue(self, file_path, to_front=False):
         """
         adds a song to the playlist queue
         """
-        self.playlist.append(file_path)
+        if to_front:
+            self.playlist.insert(0, file_path)
+        else:
+            self.playlist.append(file_path)
 
-    async def get_file_path_from_url(self, message, voice_client):
-        url = message.content.split('~play')[1]
+    async def get_file_path_from_url(self, message, voice_client, url=None):
+        if not url:
+            url = message.content.split('~play')[1]
         if not self.swab_helper.validate_url(url):
             response = json.loads(YoutubeSearch(url, max_results=1).to_json())['videos'][0]
             title = response['title']
