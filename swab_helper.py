@@ -5,6 +5,7 @@ import os
 
 from callbacks import PafyCallback
 
+
 class SWABHelper:
     def __init__(self, client):
         self.client = client
@@ -43,7 +44,8 @@ class SWABHelper:
         if os.path.exists(file_path):
             await SWABHelper(self.client).play_audio(file_path, vc)
         else:
-            audio = best.download(filepath=file_path, callback=PafyCallback(file_path, vc))
+            from settings import music
+            audio = best.download(filepath=file_path, callback=PafyCallback(music, file_path, vc))
 
     async def play_audio(self, file_path, vc):
         options = {
