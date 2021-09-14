@@ -7,5 +7,6 @@ async def play(message):
         message=message,
         url=None,
         to_front=False,
-        stop_current=False
+        stop_current=False,
+        resume_song=True
     )
