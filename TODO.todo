@@ -1,7 +1,7 @@
 Ordered from highest to lowest priority
 
 [x] Skip song
-[] Pause song
+[x] Pause/Resume song
 [] Prevent user from playing songs over 1hr in length. (I'm not paying for the extra storage space when I have to host this...)
 [] Upload songs to S3 and download from there instead of downloading locally
 [] View song queue, includes song titles and urls

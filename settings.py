@@ -18,7 +18,10 @@ command_list = [
     '~werk',
     '~clean',
     '~play',
-    '~poophead'
+    '~poophead',
+    '~skip',
+    '~pause',
+    '~resume/~continue'
 ]
 
 intents = discord.Intents.default()

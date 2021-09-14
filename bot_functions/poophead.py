@@ -5,9 +5,7 @@ async def poophead(message):
     try:
         channel = message.author.voice.channel
         voice_client = await swab.get_voice_client(channel, client)
-        message.content = '~play https://www.youtube.com/watch?v=trj0Jy6Kfo8'
-        # await swab.get_audio_url(url, vc)
-        path = await music.get_file_path_from_url(message, voice_client)
+        path = await music.get_file_path_from_url(None, voice_client, 'https://www.youtube.com/watch?v=trj0Jy6Kfo8')
         if path is not None:
             # if path is None, a video is being downloaded and PafyCallback will handle this
             music.add_to_queue(path)
