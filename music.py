@@ -65,8 +65,14 @@ class Music:
             best.download(filepath=file_path, callback=PafyCallback(self, file_path, voice_client))
         return None
 
-    async def play(self, channel, message, url, to_front=False, stop_current=False):
+    async def play(self, channel, message, url, to_front=False, stop_current=False, resume_song=False):
         voice_client = await self.swab_helper.get_voice_client(channel, self.client)
+        if resume_song and voice_client.is_paused():
+            # Exit condition to resume song if player is currently paused
+            from on_message import resume
+            await resume(message)
+            return
+
         path = await self.get_file_path_from_url(message, voice_client, url)
 
         if channel != voice_client.channel:
