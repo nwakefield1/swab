@@ -21,7 +21,8 @@ command_list = [
     '~poophead',
     '~skip',
     '~pause',
-    '~resume/~continue'
+    '~resume/~continue',
+    '~clear/~clearqueue'
 ]
 
 intents = discord.Intents.default()

@@ -29,6 +29,12 @@ class Music:
         except IndexError:
             pass
 
+    def clear_queue(self):
+        """
+        Clears the music queue
+        """
+        self.playlist = []
+
     def add_to_queue(self, file_path, to_front=False):
         """
         adds a song to the playlist queue

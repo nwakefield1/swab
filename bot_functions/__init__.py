@@ -5,3 +5,4 @@ from .werk import make_swan_go_back_to_work
 from .skip import skip
 from .pause import pause
 from .resume import resume
+from .clear_queue import clear_queue

@@ -5,14 +5,303 @@ Ordered from highest to lowest priority
 [] Prevent user from playing songs over 1hr in length. (I'm not paying for the extra storage space when I have to host this...)
 [] Upload songs to S3 and download from there instead of downloading locally
 [] View song queue, includes song titles and urls
+[] React to reactions on messages to show next in queue or previous queue
+[] Upload custom webm
+[] Play custom webm
 [] Loop/Repeat song
 [] Turn off loop/repeat song
 [] Seek to position in song
 [] Loop queue
 [] Turn off loop queue
 
+
 Nice to have:
-Play skull trumpet whenever a song is skipped
+~~Play skull trumpet whenever a song is skipped~~
 
 set up a small db for this and track stats on songs
 if necessary, prune cached songs based on stats stored from above
+
+
+UNSORTED FEATURES STOLEN FROM GROOVYBOT
+/play [link or search query]
+Loads your input and adds it to the queue; If there is no playing track, then it will start playing
+
+Permissions:
+
+Add to Queue
+
+/queue
+Displays the current song queue
+
+Permissions:
+
+View Queue
+
+/skip
+Skips to the next song
+
+Permissions:
+
+Manage Player
+
+/back
+Skips to the previous song
+
+Permissions:
+
+Manage Player
+
+/clear
+Removes all tracks from the queue
+
+Permissions:
+
+Manage Queue
+
+/jump [track position or title]
+Skips to the specified track
+
+Permissions:
+
+Manage Player
+
+View Queue
+
+/loop track
+Starts looping your currently playing track
+
+Permissions:
+
+Manage Player
+
+/loop queue
+Starts looping your current queue
+
+Permissions:
+
+Manage Player
+
+/loop off
+Stops looping
+
+Permissions:
+
+Manage Player
+
+/lyrics
+Displays lyrics for the currently playing track
+
+Permissions:
+
+View Queue
+
+/lyrics [query]
+Searches for lyrics based on your query
+
+Permissions:
+
+View Queue
+
+/pause
+Pauses playback
+
+Permissions:
+
+Manage Player
+
+/unpause
+Resumes playback
+
+Permissions:
+
+Manage Player
+
+/remove [track position or title]
+Removes the specified track from the queue
+
+Permissions:
+
+Manage Queue
+
+/remove range [start], [end]
+Removes all the tracks from the specified start through the specified end
+
+Permissions:
+
+Manage Queue
+
+/disconnect
+Disconnects the bot from your voice channel and clears the queue
+
+Permissions:
+
+Manage Player
+
+Manage Queue
+
+/shuffle
+Randomizes the current order of tracks in the queue
+
+Permissions:
+
+Manage Queue
+
+/song [song]
+Displays info about the specified track in the queue
+
+Permissions:
+
+View Queue
+
+/song
+Displays info about the currently playing track
+
+Permissions:
+
+View Queue
+
+/247
+Toggles 24/7 mode, which disables automatic inactivity-based disconnects
+
+Permissions:
+
+Manage Player
+
+Manage Server
+
+/autoplay
+Toggles AutoPlay, which will automatically queue the best song to play next through looking at your listening history
+
+Permissions:
+
+Manage Player
+
+/bass boost [amount]
+Sets the player's bass boost setting; If you input "reset", it will disable bass boosting
+
+Permissions:
+
+Manage Player
+
+/volume [new volume]
+Sets the player's volume; If you input "reset", it will set the volume back to default
+
+Permissions:
+
+Manage Player
+
+/speed [new speed]
+Sets the player's playback speed; If you input "reset", it will set the speed back to default
+
+Permissions:
+
+Manage Player
+
+/pitch [new pitch]
+Sets the player's pitch; If you input "reset", it will set the pitch back to default
+
+Permissions:
+
+Manage Player
+
+/nightcore
+Toggles nightcore mode
+
+Permissions:
+
+Manage Player
+
+/vaporwave
+Toggles vaporwave mode
+
+Permissions:
+
+Manage Player
+
+/reset effects
+Resets all audio effects
+
+Permissions:
+
+Manage Player
+
+/fastforward [amount]
+Fast forwards the player by your specified amount; The default is 10 seconds
+
+Permissions:
+
+Manage Player
+
+/rewind [amount]
+Rewinds the player by your specified amount; The default is 10 seconds
+
+Permissions:
+
+Manage Player
+
+/search [query]
+Searches for your query on YouTube and lets you choose which songs to queue; To queue a track of the results, just type the number preceding it
+
+Permissions:
+
+Add to Queue
+
+/seek [position]
+Skips to the specified timestamp in the currently playing track
+
+Permissions:
+
+Manage Player
+
+/stop
+Stops the currently playing track and returns to the beginning of the queue
+
+Permissions:
+
+Manage Player
+
+/move [track], [new position]
+Moves the specified song to the specified position
+
+Permissions:
+
+Manage Queue
+
+/saved queues list
+Lists all of your personal saved queues
+
+/saved queues load [name]
+Loads the specified saved queue into the current queue
+
+Permissions:
+
+Add to Queue
+
+/saved queues create [name]
+Saves the current queue under the specified name
+
+Permissions:
+
+View Queue
+
+/saved queues delete [name]
+Deletes the specified saved queue
+
+/saved queues share [name]
+Creates a link that anyone can use to play your saved queue
+
+/announce
+Toggles the announcing of "Now playing" messages
+
+Permissions:
+
+Manage Server
+
+/perms view [role or user]
+Displays the currently set permissions for the specified role or user
+
+Permissions:
+
+Manage Server
+
+/perms modify [role or user], [deny/allow/clear], [permission]
