@@ -65,3 +65,19 @@ class Music:
             best.download(filepath=file_path, callback=PafyCallback(self, file_path, voice_client))
         return None
 
+    async def play(self, channel, message, url, to_front=False, stop_current=False):
+        voice_client = await self.swab_helper.get_voice_client(channel, self.client)
+        path = await self.get_file_path_from_url(message, voice_client, url)
+
+        if channel != voice_client.channel:
+            await voice_client.disconnect()
+            voice_client = await self.swab_helper.get_voice_client(channel, self.client)
+
+        if path is not None:
+            # if path is None, a video is being downloaded and PafyCallback will handle this
+            self.add_to_queue(path, to_front)
+            if stop_current:
+                voice_client.stop()
+        if not voice_client.is_playing():
+            # if not playing, play the song in the queue
+            self.play_song(voice_client)

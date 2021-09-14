@@ -2,6 +2,7 @@ Ordered from highest to lowest priority
 
 [x] Skip song
 [x] Pause/Resume song
+[x] Clear queue
 [] Prevent user from playing songs over 1hr in length. (I'm not paying for the extra storage space when I have to host this...)
 [] Upload songs to S3 and download from there instead of downloading locally
 [] View song queue, includes song titles and urls
@@ -13,7 +14,11 @@ Ordered from highest to lowest priority
 [] Seek to position in song
 [] Loop queue
 [] Turn off loop queue
-
+[x] Auto-leave voice channel while idle
+[] Ping users for 10-mans, include popflash link
+[] Add RSVP to 10-man
+[] Show current RSVP list
+[] Fix skip bug, where skeleton doot will play even when skipping no song
 
 Nice to have:
 ~~Play skull trumpet whenever a song is skipped~~
