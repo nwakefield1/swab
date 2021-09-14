@@ -1,9 +1,5 @@
 import discord
 import re
-import pafy
-import os
-
-from callbacks import PafyCallback
 
 
 class SWABHelper:
@@ -21,7 +17,6 @@ class SWABHelper:
     @staticmethod
     def validate_url(url):
         url = url.split('&')[0].strip()
-        # regex = re.compile('^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$')
         regex = re.compile(
             r'^(?:http|ftp)s?://'  # http:// or https://
             r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
@@ -38,16 +33,6 @@ class SWABHelper:
         except discord.errors.ClientException:
             vc = _client.voice_clients[0]
         return vc
-
-    async def get_audio_url(self, url, vc):
-        video = pafy.new(url)
-        best = video.getbestaudio()   
-        file_path = 'music/{}.{}'.format(video.videoid, best.extension)
-        if os.path.exists(file_path):
-            await SWABHelper(self.client).play_audio(file_path, vc)
-        else:
-            from settings import music
-            audio = best.download(filepath=file_path, callback=PafyCallback(music, file_path, vc))
 
     async def play_audio(self, file_path, vc):
         options = {
