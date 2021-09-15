@@ -129,6 +129,9 @@ dmypy.json
 .pyre/
 
 # music folder, don't upload em
-music/
+music/*
+custom_audio/*
+
+!.gitkeep
 
 .idea/
