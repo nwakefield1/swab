@@ -41,13 +41,13 @@ class Music:
             future = asyncio.run_coroutine_threadsafe(self.play_song(self.client.voice_clients[0]), None)
             future.result()
         except TypeError as e:
-            if 'A coroutine object is required' in e:
+            if 'A coroutine object is required' in str(e):
                 pass
             raise e
         except IndexError:
             pass
 
-    def get_playlist_data(self) -> list[object]:
+    def get_playlist_data(self) -> list:
         """
         Get data on all the songs in the playlist.
 
