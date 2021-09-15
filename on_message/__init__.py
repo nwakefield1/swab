@@ -6,3 +6,4 @@ from .skip import skip
 from .pause import pause
 from .resume import resume
 from .clear_queue import clear_queue
+from .view_queue import view_queue
