@@ -8,6 +8,7 @@ from on_message import (
     clean,
     make_swan_go_back_to_work,
     play,
+    play_file,
     poophead,
     skip,
     pause,
@@ -35,6 +36,9 @@ async def on_message(message):
 
     if message.content.startswith('~play'):
         await play(message)
+
+    if message.content.startswith('~fplay'):
+        await play_file(message)
 
     if message.content.startswith('~skip'):
         await skip(message)

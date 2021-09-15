@@ -1,5 +1,6 @@
 Ordered from highest to lowest priority
 
+[] Refactor commands and use @bot.command() instead of using message.content.startswith()
 [x] Skip song
 [x] Pause/Resume song
 [x] Clear queue
@@ -7,8 +8,8 @@ Ordered from highest to lowest priority
 [] Upload songs to S3 and download from there instead of downloading locally
 [x] View song queue, includes song titles and urls
 [] React to reactions on messages to show next in queue or previous queue
-[] Upload custom webm
-[] Play custom webm
+[x] Upload custom webm
+[x] Play custom webm
 [] Loop/Repeat song
 [] Turn off loop/repeat song
 [] Seek to position in song
