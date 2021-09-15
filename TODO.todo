@@ -5,7 +5,7 @@ Ordered from highest to lowest priority
 [x] Clear queue
 [] Prevent user from playing songs over 1hr in length. (I'm not paying for the extra storage space when I have to host this...)
 [] Upload songs to S3 and download from there instead of downloading locally
-[] View song queue, includes song titles and urls
+[x] View song queue, includes song titles and urls
 [] React to reactions on messages to show next in queue or previous queue
 [] Upload custom webm
 [] Play custom webm

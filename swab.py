@@ -12,7 +12,8 @@ from on_message import (
     skip,
     pause,
     resume,
-    clear_queue
+    clear_queue,
+    view_queue
 )
 
 from on_voice_state_update import (
@@ -46,6 +47,9 @@ async def on_message(message):
 
     if message.content.startswith('~clear') or message.content.startswith('~clearqueue'):
         await clear_queue(message)
+
+    if message.content.startswith('~queue') or message.content.startswith('~viewqueue'):
+        await view_queue(message)
 
 
 @client.event
