@@ -5,7 +5,7 @@ from settings import client, interesting_ids
 
 
 async def make_swan_go_back_to_work(message):
-    commands = message.content.split('~werk')
+    commands = message.content.lower().split('~werk')
     try:
         times = int(commands[1].strip())
     except ValueError:

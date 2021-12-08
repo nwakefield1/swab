@@ -1,4 +1,5 @@
 import os
+import re
 import asyncio
 import datetime
 import discord
@@ -17,18 +18,33 @@ class Music:
         self.playlist = []
         self.current_song_playing = None
         self.playlist_data = []
+        self.song_started_at = None
 
-    def play_song(self, voice_client: discord.VoiceClient) -> None:
+    async def play_song_wrapper(self, voice_client: discord.VoiceClient, channel: discord.VoiceChannel = None):
+        try:
+            self.play_song(voice_client, channel)
+        except discord.errors.ClientException as e:
+            if 'Not connected to voice' in str(e):
+                channel.connect()
+
+    def play_song(self, voice_client: discord.VoiceClient, channel: discord.VoiceChannel = None) -> None:
         """
         Plays the first song in the playlist queue.
 
         :param voice_client: The discord VoiceClient that the bot should play into.
+        :param channel: A channel to connect to if the bot is currently not in one.
         :return: None
         """
-        source = discord.FFmpegOpusAudio(self.playlist[0], options={'use_wallclock_as_timestamps': True})
-        voice_client.play(source, after=self.play_after)
-        self.playlist.pop(0)
-        self.current_song_playing = self.playlist_data.pop(0)
+        try:
+            print(self.playlist)
+            source = discord.FFmpegOpusAudio(self.playlist[0], options={'use_wallclock_as_timestamps': True})
+            voice_client.play(source, after=self.play_after)
+            self.playlist.pop(0)
+            self.current_song_playing = self.playlist_data.pop(0)
+            self.song_started_at = datetime.datetime.now()
+        except discord.errors.ClientException as e:
+            if 'Not connected to voice' in str(e):
+                channel.connect()
 
     def play_after(self, error) -> None:
         """
@@ -43,7 +59,8 @@ class Music:
         except TypeError as e:
             if 'A coroutine object is required' in str(e):
                 pass
-            raise e
+            else:
+                raise e
         except IndexError:
             pass
 
@@ -60,6 +77,10 @@ class Music:
             # If connected to a voice client and not playing, return empty list
             return []
         return [self.current_song_playing] + self.playlist_data
+
+    def get_song_at(self):
+        song_at = (datetime.datetime.now() - self.song_started_at).seconds
+        return str(datetime.timedelta(seconds=song_at))
 
     def clear_queue(self) -> None:
         """
@@ -118,7 +139,7 @@ class Music:
         :return: A file path to the related audio file.
         """
         if not url:
-            url = message.content.split('~play')[1]
+            url = re.split('~play', message.content, flags=re.IGNORECASE)[1]
 
         # If the user did not input a YouTube url, search YouTube for a related video
         if not self.swab_helper.validate_url(url):
@@ -126,7 +147,9 @@ class Music:
         else:
             url = url.strip()
 
-        video = pafy.new(url)
+        video = pafy.new(url, ydl_opts={
+            'cookies': 'cookies.txt'
+        })
         video_data = {
             'title': video.title,
             'length': str(datetime.timedelta(seconds=video.length)),
@@ -143,12 +166,17 @@ class Music:
         if os.path.exists(file_path):
             return file_path
         else:
+            await self.download_song(best, file_path, voice_client)
             best.download(filepath=file_path, callback=PafyCallback(self, file_path, voice_client))
+
         return None
+
+    async def download_song(self, best, file_path, voice_client):
+        best.download(filepath=file_path, callback=PafyCallback(self, file_path, voice_client))
 
     async def play(
             self,
-            channel: discord.TextChannel,
+            channel: discord.VoiceChannel,
             message: discord.Message,
             url: str,
             to_front: bool = False,
@@ -186,4 +214,4 @@ class Music:
                 voice_client.stop()
         if not voice_client.is_playing():
             # if not playing, play the song in the queue
-            self.play_song(voice_client)
+            await self.play_song_wrapper(voice_client, channel)

@@ -32,4 +32,4 @@ async def play_file(message):
         })
     if not voice_client.is_playing():
         # if not playing, play the song in the queue
-        music.play_song(voice_client)
+        await music.play_song_wrapper(voice_client)

@@ -14,7 +14,8 @@ from on_message import (
     pause,
     resume,
     clear_queue,
-    view_queue
+    view_queue,
+    get_current_song_time
 )
 
 from on_voice_state_update import (
@@ -25,35 +26,48 @@ from on_voice_state_update import (
 
 @client.event
 async def on_message(message):
-    if message.content.startswith('~werk'):
+    # make commands case insensitive, because of this, I may not be able to use discord.Command.
+    # i hate my friends
+
+    message_content = message.content.lower()
+
+    if message_content.startswith('~werk'):
         await make_swan_go_back_to_work(message)
 
-    if message.content.startswith('~clean'):
+    if message_content.startswith('~clean'):
         await clean(message)
 
-    if message.content.startswith('~poophead'):
+    if message_content.startswith('~poophead'):
         await poophead(message)
 
-    if message.content.startswith('~play'):
+    if message_content.startswith('~play'):
         await play(message)
 
-    if message.content.startswith('~fplay'):
+    if message_content.startswith('~fplay'):
         await play_file(message)
 
-    if message.content.startswith('~skip'):
+    if message_content.startswith('~skip'):
         await skip(message)
 
-    if message.content.startswith('~pause'):
+    if message_content.startswith('~pause') or message.content.startswith('~stop'):
         await pause(message)
 
-    if message.content.startswith('~resume') or message.content.startswith('~continue'):
+    if (
+            message_content.startswith('~resume')
+            or message.content.startswith('~continue')
+            or message.content.startswith('~start')
+    ):
         await resume(message)
 
-    if message.content.startswith('~clear') or message.content.startswith('~clearqueue'):
+    if message_content.startswith('~clear') or message.content.startswith('~clearqueue'):
         await clear_queue(message)
 
-    if message.content.startswith('~queue') or message.content.startswith('~viewqueue'):
+    if message_content.startswith('~queue') or message.content.startswith('~viewqueue'):
         await view_queue(message)
+
+    if message_content.startswith('~span') or message.content.startswith('~current'):
+        await get_current_song_time(message)
+
 
 
 @client.event
