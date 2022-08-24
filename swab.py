@@ -21,6 +21,7 @@ from on_message import (
 
 from on_voice_state_update import (
     leave_channel,
+    lottery,
     ryan_lottery,
     nathan_lottery
 )
@@ -81,11 +82,11 @@ async def on_voice_state_update(member, before, after):
 
     # play poophead 1/100 chance whenever ryan joins a channel
     if member.id == interesting_ids['ryan']:
-        await ryan_lottery(member, before, after)
+        await lottery(member, before, after, 'ryan')
 
     # play island boys 1/100 chance whenever nathan joins a channel
     if member.id == interesting_ids['nathan']:
-        await nathan_lottery(member, before, after)
+        await lottery(member, before, after, 'nathan')
 
 load_dotenv()
 client.run(os.getenv("SWAB_TOKEN"))

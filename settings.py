@@ -31,3 +31,7 @@ client = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix='~')
 swab = SWABHelper(client=client)
 music = Music(client=client, swab_helper=swab)
+
+# channel shorcuts // does not work
+# general_channel = client.get_channel(234021611236360193)
+# music_bot_channel = client.get_channel(620760286781112358)
