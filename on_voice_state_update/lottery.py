@@ -13,7 +13,7 @@ def get_lottery_settings(member_name):
     elif member_name == 'ryan':
         lottery_settings = {
             'success_text': '{}: Ryan is a poophead.',
-            'fail_text': '{lottery}: Ryan is not a poophead.',
+            'fail_text': '{}: Ryan is not a poophead.',
             'url': 'https://www.youtube.com/watch?v=trj0Jy6Kfo8'
         }
     return lottery_settings
