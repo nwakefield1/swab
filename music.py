@@ -12,7 +12,7 @@ from callbacks import PafyCallback
 
 
 class Music:
-    def __init__(self, client, swab_helper):
+    def __init__(self, client=None, swab_helper=None):
         self.client = client
         self.swab_helper = swab_helper
         self.playlist = []
@@ -25,7 +25,7 @@ class Music:
             self.play_song(voice_client, channel)
         except discord.errors.ClientException as e:
             if 'Not connected to voice' in str(e):
-                channel.connect()
+                await channel.connect()
 
     def play_song(self, voice_client: discord.VoiceClient, channel: discord.VoiceChannel = None) -> None:
         """

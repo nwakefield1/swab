@@ -2,6 +2,7 @@ from .clean import clean
 from .play import play
 from .play_file import play_file
 from .poophead import poophead
+from .cbt_island_boys import cbt_island_boys
 from .werk import make_swan_go_back_to_work
 from .skip import skip
 from .pause import pause

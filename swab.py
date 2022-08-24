@@ -10,6 +10,7 @@ from on_message import (
     play,
     play_file,
     poophead,
+    cbt_island_boys,
     skip,
     pause,
     resume,
@@ -20,7 +21,8 @@ from on_message import (
 
 from on_voice_state_update import (
     leave_channel,
-    ryan_lottery
+    ryan_lottery,
+    nathan_lottery
 )
 
 
@@ -40,13 +42,16 @@ async def on_message(message):
     if message_content.startswith('~poophead'):
         await poophead(message)
 
+    if message_content.startswith('~cbt'):
+        await cbt_island_boys(message)
+
     if message_content.startswith('~play'):
         await play(message)
 
     if message_content.startswith('~fplay'):
         await play_file(message)
 
-    if message_content.startswith('~skip'):
+    if message_content.startswith('~skip') or message_content.startswith('~next'):
         await skip(message)
 
     if message_content.startswith('~pause') or message.content.startswith('~stop'):
@@ -69,14 +74,18 @@ async def on_message(message):
         await get_current_song_time(message)
 
 
-
 @client.event
 async def on_voice_state_update(member, before, after):
     if member.id == client.user.id:  # if is bot
         await leave_channel(member, before, after)
 
+    # play poophead 1/100 chance whenever ryan joins a channel
     if member.id == interesting_ids['ryan']:
         await ryan_lottery(member, before, after)
+
+    # play island boys 1/100 chance whenever nathan joins a channel
+    if member.id == interesting_ids['nathan']:
+        await nathan_lottery(member, before, after)
 
 load_dotenv()
 client.run(os.getenv("SWAB_TOKEN"))
