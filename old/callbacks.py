@@ -4,8 +4,8 @@ class PafyCallback:
         self.file_path = file_path
         self.voice_client = voice_client
 
-    def __call__(self, total, recvd, ratio, rate, eta):
+    async def __call__(self, total, recvd, ratio, rate, eta):
         if ratio == 1.0:
             self.music.add_to_queue(self.file_path)
             if not self.voice_client.is_playing():
-                self.music.play_song(self.voice_client)
+                await self.music.play_song(self.voice_client)

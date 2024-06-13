@@ -1,8 +1,10 @@
+import discord
+
 from on_message.play_file import play_file
 from settings import music
 
 
-async def play(message):
+async def play(message: discord.Message):
     has_attachment = len(message.attachments) > 0
     if has_attachment:
         await play_file(message)

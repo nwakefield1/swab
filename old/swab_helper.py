@@ -27,10 +27,12 @@ class SWABHelper:
         return re.match(regex, url)
 
     @staticmethod
-    async def get_voice_client(channel, _client):
+    async def get_voice_client(channel: discord.VoiceChannel, _client):
         try:
+            # voice_channel = await _client.fetch_channel(channel_id=channel.id)
             vc = await channel.connect()
-        except discord.errors.ClientException:
+        except discord.errors.ClientException as e:
+            print(e)
             vc = _client.voice_clients[0]
         return vc
 

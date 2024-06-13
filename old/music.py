@@ -22,12 +22,13 @@ class Music:
 
     async def play_song_wrapper(self, voice_client: discord.VoiceClient, channel: discord.VoiceChannel = None):
         try:
-            self.play_song(voice_client, channel)
+            await self.play_song(voice_client, channel)
         except discord.errors.ClientException as e:
+            print(e)
             if 'Not connected to voice' in str(e):
                 await channel.connect()
 
-    def play_song(self, voice_client: discord.VoiceClient, channel: discord.VoiceChannel = None) -> None:
+    async def play_song(self, voice_client: discord.VoiceClient, channel: discord.VoiceChannel = None) -> None:
         """
         Plays the first song in the playlist queue.
 
@@ -43,8 +44,9 @@ class Music:
             self.current_song_playing = self.playlist_data.pop(0)
             self.song_started_at = datetime.datetime.now()
         except discord.errors.ClientException as e:
+            print(e)
             if 'Not connected to voice' in str(e):
-                channel.connect()
+                await channel.connect()
 
     def play_after(self, error) -> None:
         """
@@ -57,6 +59,7 @@ class Music:
             future = asyncio.run_coroutine_threadsafe(self.play_song(self.client.voice_clients[0]), None)
             future.result()
         except TypeError as e:
+            print(e)
             if 'A coroutine object is required' in str(e):
                 pass
             else:
@@ -202,7 +205,6 @@ class Music:
             return
 
         path = await self.get_file_path_from_url(message, voice_client, url)
-
         if channel != voice_client.channel:
             await voice_client.disconnect()
             voice_client = await self.swab_helper.get_voice_client(channel, self.client)

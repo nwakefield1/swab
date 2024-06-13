@@ -27,6 +27,7 @@ command_list = [
 
 intents = discord.Intents.default()
 intents.members = True
+intents.voice_states = True
 client = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix='~')
 swab = SWABHelper(client=client)

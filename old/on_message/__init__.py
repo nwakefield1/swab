@@ -10,3 +10,4 @@ from .resume import resume
 from .clear_queue import clear_queue
 from .view_queue import view_queue
 from .get_current_song_time import get_current_song_time
+from .d_nuts import d_nuts
