@@ -1,4 +1,5 @@
-discord.py[voice]==1.7.3
+#discord.py[voice]==1.7.3
+discord.py==2.3.2
 yarl==1.4.2
 youtube-dl==2021.6.6
 yt-dlp==2023.03.03

@@ -1,14 +1,8 @@
-import os
-
 import discord
 from discord.ext import commands
-from dotenv import load_dotenv
 
-
-load_dotenv()
-
-TOKEN = os.environ.get('SWAB_TOKEN', '')
-LRL_ID = '234021611236360193'
+from music import Music
+from swab_helper import SWABHelper
 
 interesting_ids = {
     'nathan': 234020073281421312,
@@ -20,19 +14,24 @@ interesting_ids = {
     'john': 187058095250341888
 }
 
-command_list = []
+command_list = [
+    '~werk',
+    '~clean',
+    '~play',
+    '~poophead',
+    '~skip',
+    '~pause',
+    '~resume/~continue',
+    '~clear/~clearqueue'
+]
 
 intents = discord.Intents.default()
 intents.members = True
 intents.voice_states = True
-intents.message_content = True
 client = discord.Client(intents=intents)
-
-swab_bot = commands.Bot(
-    command_prefix=commands.when_mentioned_or("~"),
-    description='SWAB 2.0 Bot',
-    intents=intents,
-)
+bot = commands.Bot(command_prefix='~')
+swab = SWABHelper(client=client)
+music = Music(client=client, swab_helper=swab)
 
 # channel shorcuts // does not work
 # general_channel = client.get_channel(234021611236360193)
